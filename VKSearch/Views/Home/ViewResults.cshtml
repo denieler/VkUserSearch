@@ -1,0 +1,40 @@
+﻿@model List<VKSearch.Models.VkUser>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewResults</title>
+
+    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+<body>
+    <h3>Search results:</h3>
+    <table>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Content("http://vk.com/id" + user.id)"><img src="@user.photo_200_orig" /></a>
+                    </td>
+                    <td>
+                        @user.first_name @user.last_name
+                    </td>
+                    <td>
+                        @user.status
+                    </td>
+                    <td>
+                        @Ajax.ActionLink("Mark as checked", "CheckSearchResult", new { userId = user.id }, new AjaxOptions { HttpMethod = "POST" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
